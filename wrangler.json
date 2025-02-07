@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "r2detail",
+	"name": "cloudwrap",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-02-04",
 	"observability": {
@@ -9,7 +9,7 @@
 	"r2_buckets": [
 		{
 			"binding": "BUCKET",
-			"bucket_name": "willhackett-preview"
+			"bucket_name": "cloudwrap"
 		}
 	],
 	"assets": {

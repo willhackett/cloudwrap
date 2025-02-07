@@ -10,6 +10,26 @@ export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const url = new URL(request.url);
 
+		if (url.pathname === '/upload' && request.method === 'POST') {
+			// Really basic, horrible, insecure auth - don't use this on things you actually care about
+			if (request.headers.get('shared-secret') !== env.SHARED_SECRET) {
+				return new Response('Unauthorized', { status: 401 });
+			}
+
+			const formData = await request.formData();
+			const file = formData.get('file') as File;
+
+			if (!file) {
+				return new Response('No file found in form data', { status: 400 });
+			}
+
+			const fileName = file.name;
+
+			await env.BUCKET.put(fileName, file);
+
+			return new Response('Uploaded', { status: 200 });
+		}
+
 		// Serve the bucket
 		if (url.pathname.startsWith(BUCKET_PREFIX)) {
 			const fileName = url.pathname.slice(BUCKET_PREFIX.length);

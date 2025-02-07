@@ -3,4 +3,5 @@
 interface Env {
 	BUCKET: R2Bucket;
 	ASSETS: Fetcher;
+	SHARED_SECRET: string;
 }
